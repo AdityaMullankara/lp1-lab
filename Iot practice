@@ -1,0 +1,46 @@
+from gpiozero import LED
+from signal import pause
+import RPi.GPIO as GPIO
+import time
+
+GPIO.setmode(GPIO.BCM)
+LED_PIN = 27
+IR_PIN = 17 
+indicator = LED(LED_PIN)
+GPIO.setup(IR_PIN, GPIO.IN)
+count = 1
+while True:
+ got_something = GPIO.input(IR_PIN)
+ if got_something:
+ indicator.on()
+ print("{:>3} Got something".format(count))
+ else:
+ indicator.off()
+ print("{:>3} Nothing detected".format(count))
+ count += 1 time.sleep(0.2)
+
+
+
+
+---------------------------------------------
+
+
+
+
+import picamera
+
+from time import sleep
+
+#create object for PiCamera class
+
+camera = picamera.PiCamera()
+#set resolution
+camera.resolution = (1024, 768)
+camera.brightness = 60
+camera.start_preview()
+#add text on image
+camera.annotate_text = 'Hi Pi User'
+sleep(5)
+#store image
+camera.capture('image1.jpeg')
+camera.stop_preview()
